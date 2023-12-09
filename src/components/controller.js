@@ -8,7 +8,6 @@ export const Component=()=>{
     switch (componentName.value) {
         case 'counter': return <Counter />
         case 'todos': return  <Todos />
-        default:
-            break;
+        default: break;
     }
 }
