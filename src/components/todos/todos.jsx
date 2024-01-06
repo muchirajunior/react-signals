@@ -1,7 +1,9 @@
+import { useSearchParams } from "react-router-dom";
+import NavBar from "../navbar/navbar";
 import { todos } from "./todo_signal";
 
 export default function Todos() {
-
+  console.log('render todos..');
   function addTask() {
     console.log('render todo ..');
     let task = document.getElementById('input').value;
@@ -21,7 +23,11 @@ export default function Todos() {
   function deleteTodo(todo){
     todos.value= todos.value.filter((td)=>td !==todo )
   }
+  const [params, ]=useSearchParams({search:''})
+  const search=params.get('search')
   return (
+    <>
+    <NavBar />
     <div className='container pt-3'>
       <div className="d-flex flex-row">
         <input type="text" className="form-control w-75 me-5" id='input' placeholder="Enter Task ..." />
@@ -29,7 +35,7 @@ export default function Todos() {
       </div>
       <h3 className="mt-5">Todos</h3>
       <div className="card m-2 p-3">
-        {todos.value.map((todo)=>
+        {todos.value.map((todo)=> todo.title.includes(search) &&
           <div className="mb-3 form-check d-flex flex-row" key={todo.title}>
             <input type="checkbox" className="form-check-input me-2" checked={todo.completed} onChange={(_) => updateTodo(todo)} />
             <label className="form-check-label" htmlFor="exampleCheck1">{todo.title}</label>
@@ -41,5 +47,7 @@ export default function Todos() {
       </div>
 
     </div>
+    </>
+
   )
 }

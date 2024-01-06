@@ -1,8 +1,11 @@
 import React from 'react'
 import logo from '../../assets/logo.png';
-import { componentName } from '../controller';
+import { Link, useSearchParams } from 'react-router-dom';
 export default function NavBar() {
     console.log('render navbar');
+    const [param, setSearch]=useSearchParams({search:''})
+    const search= param.get("search")
+
     return (
         <nav className="navbar navbar-expand-lg shadow">
             <div className="container-fluid">
@@ -16,16 +19,18 @@ export default function NavBar() {
                 <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item">
-                            <a className="nav-link" aria-current="page" href="#!" onClick={()=>componentName.value='todos'}>Todos</a>
+                        <Link className="nav-link" to="/todos" >Todos</Link>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#!" onClick={()=>componentName.value='counter'}>Counter</a>
+                            <Link className="nav-link" to="/" >Counter</Link>
                         </li>
                     </ul>
-                    <form className="d-flex" role="search">
-                        <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                        <button className="btn btn-outline-success" type="submit">Search</button>
-                    </form>
+                    <div className="d-flex" role="search">
+                        <input className="form-control shadow me-2 rounded-4" type="search" placeholder="Search" defaultValue={search} onChange={(event)=> setSearch(prev=>{
+                            prev.set('search',event.target.value) 
+                            return prev;
+                            }, {relative:true})}  />
+                    </div>
                 </div>
             </div>
         </nav>
