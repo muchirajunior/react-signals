@@ -1,6 +1,6 @@
-import { useSearchParams } from "react-router-dom";
+import { useState } from "react";
 import NavBar from "../navbar/navbar";
-import { todos } from "./todo_signal";
+import { filteredTodos, todos } from "./todo_signal";
 
 export default function Todos() {
   console.log('render todos..');
@@ -13,6 +13,7 @@ export default function Todos() {
     todos.value = [...todos.value, { title: task, 'completed': false }]
     document.getElementById('input').value = '';
   }
+  const [num,setNum]=useState(0)
 
   function updateTodo(task) {
     console.log(task);
@@ -23,8 +24,7 @@ export default function Todos() {
   function deleteTodo(todo){
     todos.value= todos.value.filter((td)=>td !==todo )
   }
-  const [params, ]=useSearchParams({search:''})
-  const search=params.get('search')
+
   return (
     <>
     <NavBar />
@@ -33,14 +33,14 @@ export default function Todos() {
         <input type="text" className="form-control w-75 me-5" id='input' placeholder="Enter Task ..." />
         <button className="btn btn-primary" onClick={addTask}>Add Task</button>
       </div>
-      <h3 className="mt-5">Todos</h3>
+      <h3 className="mt-5">Todos : {num}</h3>
       <div className="card m-2 p-3">
-        {todos.value.map((todo)=> todo.title.includes(search) &&
+        {filteredTodos.value.map((todo)=>
           <div className="mb-3 form-check d-flex flex-row" key={todo.title}>
             <input type="checkbox" className="form-check-input me-2" checked={todo.completed} onChange={(_) => updateTodo(todo)} />
             <label className="form-check-label" htmlFor="exampleCheck1">{todo.title}</label>
             <span className="flex-fill"></span>
-            <button className="btn btn-info btn-sm me-2">update</button>
+            <button className="btn btn-info btn-sm me-2" onClick={()=>setNum(num+1)} >update</button>
             <button className="btn btn-danger btn-sm " onClick={()=>deleteTodo(todo)} >delete</button>
           </div>
         )}

@@ -1,10 +1,12 @@
 import React from 'react'
 import logo from '../../assets/logo.png';
 import { Link, useSearchParams } from 'react-router-dom';
+import { searchKey } from '../todos/todo_signal';
 export default function NavBar() {
     console.log('render navbar');
     const [param, setSearch]=useSearchParams({search:''})
     const search= param.get("search")
+    searchKey.value=search
 
     return (
         <nav className="navbar navbar-expand-lg shadow">
@@ -28,6 +30,7 @@ export default function NavBar() {
                     <div className="d-flex" role="search">
                         <input className="form-control shadow me-2 rounded-4" type="search" placeholder="Search" defaultValue={search} onChange={(event)=> setSearch(prev=>{
                             prev.set('search',event.target.value) 
+                            searchKey.value=event.target.value
                             return prev;
                             }, {relative:true})}  />
                     </div>
