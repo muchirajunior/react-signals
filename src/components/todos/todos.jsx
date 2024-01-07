@@ -1,4 +1,3 @@
-import { useState } from "react";
 import NavBar from "../navbar/navbar";
 import { filteredTodos, todos } from "./todo_signal";
 
