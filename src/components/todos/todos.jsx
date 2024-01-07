@@ -28,8 +28,7 @@ export default function Todos() {
     <NavBar />
     <div className='container pt-3'>
       <div className="d-flex flex-row">
-        <input type="text" className="form-control w-75 me-5" id='input' placeholder="Enter Task ..." />
-        <button className="btn btn-primary" onClick={addTask}>Add Task</button>
+        <input type="text" className="form-control mx-auto" id='input' placeholder="Enter Task ..." onKeyDown={(event)=>event.key==="Enter"? addTask():null}  />
       </div>
       <h3 className="mt-5">Todos : </h3>
       <div className="card m-2 p-3">
